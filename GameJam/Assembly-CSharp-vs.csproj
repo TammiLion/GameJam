@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\CubeScript.cs" />
      <Compile Include="Assets\Scripts\TeamScript.cs" />
      <Compile Include="Assets\Scripts\hello.cs" />
   </ItemGroup>

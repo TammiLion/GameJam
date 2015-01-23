@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TeamScript : MonoBehaviour {
-
-
+public class CubeScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
