@@ -71,22 +71,22 @@ public class PlayerBehaviour : MonoBehaviour {
 		rigidbody2D.AddForce(new Vector2(xmove * 10f, 0));
 
 		//fire1
-		if (Input.GetButton("Fire1_P1")) {
+		if (Input.GetButton(FIRE1_P1)) {
 			cubes[0].GetComponent<CubeBehaviour>().Attack();
 		}
 
 		//fire2
-		if (Input.GetButton("Fire2_P1")) {
+		if (Input.GetButton(FIRE2_P1)) {
 			cubes[1].GetComponent<CubeBehaviour>().Attack();
 		}
 
 		//fire3
-		if (Input.GetButton("Fire1_P2")) {
+		if (Input.GetButton(FIRE1_P2)) {
 			cubes[2].GetComponent<CubeBehaviour>().Attack();
 		}
 
 		//fire4
-		if (Input.GetButton("Fire2_P2")) {
+		if (Input.GetButton(FIRE2_P2)) {
 			cubes[3].GetComponent<CubeBehaviour>().Attack();
 		}
 

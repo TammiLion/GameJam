@@ -30,13 +30,13 @@ public class MeleeBehaviour : CubeBehaviour {
 	}
 
 	public override void Attack() {
-		if (HP > 0 && bulletTimer >= attackSpeed){
+		if (HP > 0 && bulletTimer >= attackSpeed && !stunned){
 			glove.renderer.enabled = true;
 			gloveTimer = 0.05f;
 
 			if (hit.collider != null && hit.collider.gameObject.tag == "Cube") {
 				CubeBehaviour vs = hit.collider.gameObject.GetComponent<CubeBehaviour>();
-				vs.TakeDamage(Element, Weapon, dmg);
+				vs.TakeDamage(this, dmg);
 	        }
 
 			bulletTimer = 0f;
