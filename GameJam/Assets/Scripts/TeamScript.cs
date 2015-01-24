@@ -50,7 +50,7 @@ public class TeamScript : MonoBehaviour
 	
 		void getAllCubes ()
 		{
-				bottomCube = (GameObject) GameObject.Find ("bottom");
+		bottomCube = (GameObject) GameObject.Find ("bottom");
 		topCube = (GameObject) GameObject.Find ("top");
 		onBottomCube = (GameObject) GameObject.Find ("two");
 		belowTopCube = (GameObject) GameObject.Find ("three");
@@ -62,15 +62,14 @@ public class TeamScript : MonoBehaviour
 		{
 			getSwapInputP1 ();
 			getSwapInputP2 ();
+			Move ();
 		}
 
 	void getSwapInputP1() {
 		if (Input.GetButtonDown (SWAP_UP_1_1)) {
-			Debug.Log (SWAP_UP_1_1);
 			swapCube(getCube(1,1), true);
 		}
 		if (Input.GetButtonDown (SWAP_DOWN_1_1)) {
-			Debug.Log (SWAP_DOWN_1_1);
 			swapCube(getCube(1,1), false);
 		}
 		/*if (Input.GetAxisRaw (SWAP_UP_2_1) == 0 && axis1InUse) {
@@ -78,26 +77,21 @@ public class TeamScript : MonoBehaviour
 		}*/
 		if (Input.GetButtonDown (SWAP_UP_2_1) &! axis1InUse) {
 			axis1InUse = true;
-			Debug.Log (SWAP_UP_2_1);
 			swapCube(getCube(2,1), true);
 		}
 		if (Input.GetButtonDown (SWAP_DOWN_2_1) &! axis1InUse) {
 			axis1InUse = true;
-			Debug.Log (SWAP_DOWN_2_1);
 			swapCube(getCube(2,1), false);
 		}
 	}
 
 	void getSwapInputP2() {
 		if (Input.GetButtonDown (SWAP_UP_1_2)) {
-			Debug.Log (SWAP_UP_1_2);
 			swapCube(getCube(1,2), true);
 		}
 		if (Input.GetButtonDown (SWAP_DOWN_1_2)) {
-			Debug.Log (SWAP_DOWN_1_2);
 			swapCube(getCube(1,2), false);
 		}
-		Debug.Log (SWAP_UP_2_2 + Input.GetAxis (SWAP_UP_2_2));
 		if (Input.GetAxisRaw (SWAP_UP_2_2) == 0 && axis2InUse) {
 			axis2InUse = false;
 		}
@@ -114,23 +108,19 @@ public class TeamScript : MonoBehaviour
 	void swapCube(GameObject cube, bool up) {
 		if (up) {
 			if (cube == topCube) {
-				Debug.Log ("up topCube");
 				swapThisCube = null;
 				return;
 			} else if(cube == belowTopCube) {
-				Debug.Log ("up belowTopCube");
 				Swap(belowTopCube, topCube);
 				swapThisCube = belowTopCube;
 				belowTopCube = topCube;
 				topCube = swapThisCube;
 			} else if (cube == onBottomCube) {
-				Debug.Log ("up onBottomCube");
 				Swap(onBottomCube, belowTopCube);
 				swapThisCube = onBottomCube;
 				onBottomCube = belowTopCube;
 				belowTopCube = swapThisCube;
 			} else if(cube == bottomCube) {
-				Debug.Log ("up bottomCube");
 				Swap (bottomCube, onBottomCube);
 				swapThisCube = bottomCube;
 				bottomCube = onBottomCube;
@@ -138,23 +128,19 @@ public class TeamScript : MonoBehaviour
 			}
 		} else {
 			if(cube == bottomCube) {
-				Debug.Log ("down bottomCube");
 				swapThisCube = null;
 				return;
 			} else if(cube == belowTopCube) {
-				Debug.Log ("down belowTopCube");
 				Swap(belowTopCube, onBottomCube);
 				swapThisCube = onBottomCube;
 				onBottomCube = belowTopCube;
 				belowTopCube = swapThisCube;
 			} else if (cube == onBottomCube) {
-				Debug.Log ("down onBottomCube");
 				Swap(onBottomCube, bottomCube);
 				swapThisCube = bottomCube;
 				bottomCube = onBottomCube;
 				onBottomCube = swapThisCube;
 			} else if(cube == topCube) {
-				Debug.Log ("down topCube");
 				Swap (topCube, belowTopCube);
 				swapThisCube = belowTopCube;
 				belowTopCube = topCube;
@@ -165,12 +151,19 @@ public class TeamScript : MonoBehaviour
 	}
 
 
-		public void Move (float gravityForce)
+		public void Move ()
 		{
 				// get movement for X-axis
-				float moveHorizontal = Input.GetAxis (HORIZONTAL_1);
-				Vector2 movement = new Vector2 (moveHorizontal, gravityForce);
-				rigidbody2D.velocity = movement * speed;
+		float moveHorizontal;
+		Debug.Log ("bottomCube playerID: " + bottomCube.GetComponent<CubeScript> ().player);
+		if (bottomCube.GetComponent<CubeScript> ().player == 1) {
+			moveHorizontal = Input.GetAxis (HORIZONTAL_1);
+		} else {
+			moveHorizontal = Input.GetAxis (HORIZONTAL_2);
+		}
+		Vector2 movement = new Vector2 (moveHorizontal, 0);
+		rigidbody2D.velocity = movement * speed;
+		//rigidbody2D.AddForce (new Vector2(moveHorizontal * 0.5f, 0));
 		}
 
 		public void Swap (GameObject one, GameObject two)
