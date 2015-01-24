@@ -92,16 +92,11 @@ public class PlayerBehaviour : MonoBehaviour {
 			Debug.Log(SWAP_DOWN_1_1);
 			swapCube(getCube(1,1), false);
 		}
-		/*if (Input.GetAxisRaw (SWAP_UP_2_1) == 0 && axis1InUse) {
-			axis1InUse = false;
-		}*/
-		if (Input.GetButtonDown (SWAP_UP_2_1) /*&! axis1InUse*/) {
-			//axis1InUse = true;
+		if (Input.GetButtonDown(SWAP_UP_2_1)) {
 			Debug.Log(SWAP_UP_2_1);
 			swapCube(getCube(2,1), true);
 		}
-		if (Input.GetButtonDown (SWAP_DOWN_2_1) /*&! axis1InUse*/) {
-			//axis1InUse = true;
+		if (Input.GetButtonDown(SWAP_DOWN_2_1)) {
 			Debug.Log(SWAP_DOWN_2_1);
 			swapCube(getCube(2,1), false);
 		}
@@ -116,17 +111,12 @@ public class PlayerBehaviour : MonoBehaviour {
 			Debug.Log(SWAP_DOWN_1_2);
 			swapCube(getCube(1,2), false);
 		}
-		/*if (Input.GetAxisRaw (SWAP_UP_2_2) == 0 && axis2InUse) {
-			axis2InUse = false;
-		}*/
-		if (Input.GetButtonDown (SWAP_UP_2_2)/*>0.0 &! axis2InUse*/) {
-			Debug.Log(SWAP_DOWN_2_2);
-			//axis2InUse = true;
+		if (Input.GetButtonDown(SWAP_UP_2_2)) {
+			Debug.Log(SWAP_UP_2_2);
 			swapCube(getCube(2,2), true);
 		}
-		if (Input.GetButtonDown(SWAP_DOWN_2_2)/*<-0.1 &! axis2InUse*/) {
+		if (Input.GetButtonDown(SWAP_DOWN_2_2)) {
 			Debug.Log(SWAP_DOWN_2_2);
-			//axis2InUse = true;
 			swapCube(getCube(2,2), false);
 		}
 	}
@@ -226,8 +216,14 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.tag == "Ground"){
-			if (Input.GetButton("Jump_P1")) {
-				rigidbody2D.AddForce(new Vector2(0, 100f));
+			if (bottomCube.GetComponent<CubeScript> ().player == 1) {
+				if (Input.GetButton("Jump_P1")) {
+					rigidbody2D.AddForce(new Vector2(0, 100f));
+				}
+			} else {
+				if (Input.GetButton("Jump_P2")) {
+					rigidbody2D.AddForce(new Vector2(0, 100f));
+				}
 			}
 		}
 	}
