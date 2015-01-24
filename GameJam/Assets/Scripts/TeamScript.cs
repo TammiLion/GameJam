@@ -30,10 +30,11 @@ public class TeamScript : MonoBehaviour
 		float moveVertical;
 		public bool grounded = false;
 		private Transform[] cubesPositions;
-		private Transform bottomCube; //1
-		private Transform topCube; //4
-		private Transform onBottomCube; //2
-		private Transform belowTopCube; //3
+		private GameObject bottomCube; //1
+		private GameObject topCube; //4
+		private GameObject onBottomCube; //2
+		private GameObject belowTopCube; //3
+		private GameObject swapThisCube;
 		Transform myTransform;
 
 		// Use this for initialization
@@ -45,43 +46,113 @@ public class TeamScript : MonoBehaviour
 	
 		void getAllCubes ()
 		{
-				bottomCube = transform.Find ("bottom");
-				topCube = transform.Find ("top");
-				onBottomCube = transform.Find ("two");
-				belowTopCube = transform.Find ("three");
+				bottomCube = (GameObject) GameObject.Find ("bottom");
+		topCube = (GameObject) GameObject.Find ("top");
+		onBottomCube = (GameObject) GameObject.Find ("two");
+		belowTopCube = (GameObject) GameObject.Find ("three");
 		}
 	
 		// Update is called once per frame
 
 		void Update ()
 		{
-				if (Input.GetButtonDown (FIRE_1_1)) {
-						Debug.Log ("figure out how the f we h");
-						Swap (bottomCube, onBottomCube);
-				}
-		getSwapInput ();
+			getSwapInputP1 ();
+			getSwapInputP2 ();
 		}
 
-		void getSwapInput() {
+	void getSwapInputP1() {
+		if (Input.GetButtonDown (SWAP_UP_1_1)) {
+			Debug.Log (SWAP_UP_1_1);
+			swapCube(getCube(1,1), true);
+		}
+		if (Input.GetButtonDown (SWAP_DOWN_1_1)) {
+			Debug.Log (SWAP_DOWN_1_1);
+			swapCube(getCube(1,1), false);
+		}
+		if (Input.GetButtonDown (SWAP_UP_2_1)) {
+			Debug.Log (SWAP_UP_2_1);
+			swapCube(getCube(2,1), true);
+		}
+		if (Input.GetButtonDown (SWAP_DOWN_2_1)) {
+			Debug.Log (SWAP_DOWN_2_1);
+			swapCube(getCube(2,1), false);
+		}
 	}
 
-		void FixedUpdate ()
-		{
-				//Check if cube is grounded
-				if (bottomCube.position.y <= -0.2) {
-						grounded = true;
-						// reset gravity acceleration since it is grounded
-						moveVertical = 0;
-						// jump
-						if (Input.GetButtonDown (JUMP_1)) {
-								moveVertical = jumpHeight;
-								grounded = false;
-						}
-				}
-				// add force of gravity
-				moveVertical -= gravity * Time.fixedDeltaTime;
-				Move (moveVertical);
+	void getSwapInputP2() {
+		if (Input.GetButtonDown (SWAP_UP_1_2)) {
+			Debug.Log (SWAP_UP_1_2);
+			swapCube(getCube(1,2), true);
 		}
+		if (Input.GetButtonDown (SWAP_DOWN_1_2)) {
+			Debug.Log (SWAP_DOWN_1_2);
+			swapCube(getCube(1,2), false);
+		}
+		Debug.Log (SWAP_UP_2_2 + Input.GetAxisRaw (SWAP_UP_2_2));
+		if (Input.GetAxisRaw (SWAP_UP_2_2)>0.0) {
+			Debug.Log (SWAP_UP_2_2);
+			swapCube(getCube(2,2), true);
+		}
+		Debug.Log (SWAP_DOWN_2_2 + Input.GetAxisRaw (SWAP_DOWN_2_2));
+		if (Input.GetAxisRaw(SWAP_DOWN_2_2)<-0.1) {
+			Debug.Log (SWAP_DOWN_2_2);
+			swapCube(getCube(2,2), false);
+		}
+	}
+
+	void swapCube(GameObject cube, bool up) {
+		if (up) {
+			if (cube == topCube) {
+				Debug.Log ("up topCube");
+				swapThisCube = null;
+				return;
+			} else if(cube == belowTopCube) {
+				Debug.Log ("up belowTopCube");
+				Swap(belowTopCube, topCube);
+				swapThisCube = belowTopCube;
+				belowTopCube = topCube;
+				topCube = swapThisCube;
+			} else if (cube == onBottomCube) {
+				Debug.Log ("up onBottomCube");
+				Swap(onBottomCube, belowTopCube);
+				swapThisCube = onBottomCube;
+				onBottomCube = belowTopCube;
+				belowTopCube = swapThisCube;
+			} else if(cube == bottomCube) {
+				Debug.Log ("up bottomCube");
+				Swap (bottomCube, onBottomCube);
+				swapThisCube = bottomCube;
+				bottomCube = onBottomCube;
+				onBottomCube = swapThisCube;
+			}
+		} else {
+			if(cube == bottomCube) {
+				Debug.Log ("down bottomCube");
+				swapThisCube = null;
+				return;
+			} else if(cube == belowTopCube) {
+				Debug.Log ("down belowTopCube");
+				Swap(belowTopCube, onBottomCube);
+				swapThisCube = onBottomCube;
+				onBottomCube = belowTopCube;
+				belowTopCube = swapThisCube;
+			} else if (cube == onBottomCube) {
+				Debug.Log ("down onBottomCube");
+				Swap(onBottomCube, bottomCube);
+				swapThisCube = bottomCube;
+				bottomCube = onBottomCube;
+				onBottomCube = swapThisCube;
+			} else if(cube == topCube) {
+				Debug.Log ("down topCube");
+				Swap (topCube, belowTopCube);
+				swapThisCube = belowTopCube;
+				belowTopCube = topCube;
+				topCube = swapThisCube;
+			}
+		}
+		swapThisCube = null;
+	}
+
 
 		public void Move (float gravityForce)
 		{
@@ -91,14 +162,14 @@ public class TeamScript : MonoBehaviour
 				rigidbody2D.velocity = movement * speed;
 		}
 
-		public void Swap (Transform one, Transform two)
+		public void Swap (GameObject one, GameObject two)
 		{
 				Vector3 temp = new Vector3 (one.transform.position.x, one.transform.position.y, one.transform.position.z);
 				one.transform.position = two.transform.position;
 				two.transform.position = temp;
 		}
 
-		Transform getCube (int player, int id)
+		GameObject getCube (int id, int player)
 		{
 				CubeScript checkScript = bottomCube.GetComponent<CubeScript> ();
 				if (checkScript.player == player && checkScript.id == id) {
