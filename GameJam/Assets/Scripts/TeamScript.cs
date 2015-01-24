@@ -11,7 +11,7 @@ public class TeamScript : MonoBehaviour
 		public float gravity = 20;
 		public float jumpHeight = 15;
 		float moveVertical;
-		bool grounded = false;
+		public bool grounded = false;
 		private Transform[] cubesPositions;
 		private Transform bottomCube; //1
 		private Transform topCube; //4
