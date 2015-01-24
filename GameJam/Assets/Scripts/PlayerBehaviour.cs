@@ -15,6 +15,8 @@ public class PlayerBehaviour : MonoBehaviour {
 	private GameObject belowTopCube; //3
 	private GameObject swapThisCube;
 
+	public string TEAM_TAG = "";
+
 	public string HORIZONTAL_1 = "Horizontal_P1";
 	public string HORIZONTAL_2 = "Horizontal_P2";
 
@@ -26,6 +28,15 @@ public class PlayerBehaviour : MonoBehaviour {
 	public string SWAP_DOWN_1_2 = "Swap_down_1_P2";
 	public string SWAP_UP_2_2 = "Swap_up_2_P2";
 	public string SWAP_DOWN_2_2 = "Swap_down_2_P2";
+
+	public string JUMP_P1 = "Jump_P1";
+	public string JUMP_P2 = "Jump_P2";
+	public string FIRE1_P1 = "";
+	public string FIRE2_P1 = "";
+	public string FIRE1_P2 = "";
+	public string FIRE2_P2 = "";
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -42,10 +53,10 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	void getAllCubes ()
 	{
-		bottomCube = (GameObject) GameObject.Find ("bottom");
-		topCube = (GameObject) GameObject.Find ("top");
-		onBottomCube = (GameObject) GameObject.Find ("two");
-		belowTopCube = (GameObject) GameObject.Find ("three");
+		bottomCube = (GameObject) GameObject.Find ("bottom"+TEAM_TAG);
+		topCube = (GameObject) GameObject.Find ("top"+TEAM_TAG);
+		onBottomCube = (GameObject) GameObject.Find ("two"+TEAM_TAG);
+		belowTopCube = (GameObject) GameObject.Find ("three"+TEAM_TAG);
 	}
 
 	// Update is called once per frame
@@ -217,11 +228,11 @@ public class PlayerBehaviour : MonoBehaviour {
 	void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.tag == "Ground"){
 			if (bottomCube.GetComponent<CubeScript> ().player == 1) {
-				if (Input.GetButton("Jump_P1")) {
+				if (Input.GetButton(JUMP_P1)) {
 					rigidbody2D.AddForce(new Vector2(0, 100f));
 				}
 			} else {
-				if (Input.GetButton("Jump_P2")) {
+				if (Input.GetButton(JUMP_P2)) {
 					rigidbody2D.AddForce(new Vector2(0, 100f));
 				}
 			}
