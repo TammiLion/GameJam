@@ -6,8 +6,12 @@ public class CubeBehaviour : MonoBehaviour {
 	public string Element;
 	public string Weapon = "Ranged";
 
+	public Transform bulletPrefab;
+
+	public float bulletTimer = 0;
+
 	// Use this for initialization
-	void Start () {
+	public void Start () {
 		switch(Element) {
 			case "Fire":
 				renderer.material.color = Color.red;
@@ -27,6 +31,10 @@ public class CubeBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+	}
+
+	public virtual void Attack() {
+		Debug.Log("Bongiorno");
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
