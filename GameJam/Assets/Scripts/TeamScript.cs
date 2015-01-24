@@ -24,6 +24,10 @@ public class TeamScript : MonoBehaviour
 		public string SWAP_DOWN_1_2 = "Swap_down_1_P2";
 		public string SWAP_UP_2_2 = "Swap_up_2_P2";
 		public string SWAP_DOWN_2_2 = "Swap_down_2_P2";
+		
+		private bool axis1InUse = false;
+		private bool axis2InUse = false;
+
 		public float speed = 10;
 		public float gravity = 20;
 		public float jumpHeight = 15;
@@ -69,11 +73,16 @@ public class TeamScript : MonoBehaviour
 			Debug.Log (SWAP_DOWN_1_1);
 			swapCube(getCube(1,1), false);
 		}
-		if (Input.GetButtonDown (SWAP_UP_2_1)) {
+		/*if (Input.GetAxisRaw (SWAP_UP_2_1) == 0 && axis1InUse) {
+			axis1InUse = false;
+		}*/
+		if (Input.GetButtonDown (SWAP_UP_2_1) &! axis1InUse) {
+			axis1InUse = true;
 			Debug.Log (SWAP_UP_2_1);
 			swapCube(getCube(2,1), true);
 		}
-		if (Input.GetButtonDown (SWAP_DOWN_2_1)) {
+		if (Input.GetButtonDown (SWAP_DOWN_2_1) &! axis1InUse) {
+			axis1InUse = true;
 			Debug.Log (SWAP_DOWN_2_1);
 			swapCube(getCube(2,1), false);
 		}
@@ -88,14 +97,16 @@ public class TeamScript : MonoBehaviour
 			Debug.Log (SWAP_DOWN_1_2);
 			swapCube(getCube(1,2), false);
 		}
-		Debug.Log (SWAP_UP_2_2 + Input.GetAxisRaw (SWAP_UP_2_2));
-		if (Input.GetAxisRaw (SWAP_UP_2_2)>0.0) {
-			Debug.Log (SWAP_UP_2_2);
+		Debug.Log (SWAP_UP_2_2 + Input.GetAxis (SWAP_UP_2_2));
+		if (Input.GetAxisRaw (SWAP_UP_2_2) == 0 && axis2InUse) {
+			axis2InUse = false;
+		}
+		if (Input.GetAxisRaw (SWAP_UP_2_2)>0.0 &! axis2InUse) {
+			axis2InUse = true;
 			swapCube(getCube(2,2), true);
 		}
-		Debug.Log (SWAP_DOWN_2_2 + Input.GetAxisRaw (SWAP_DOWN_2_2));
-		if (Input.GetAxisRaw(SWAP_DOWN_2_2)<-0.1) {
-			Debug.Log (SWAP_DOWN_2_2);
+		if (Input.GetAxisRaw(SWAP_UP_2_2)<-0.1 &! axis2InUse) {
+			axis2InUse = true;
 			swapCube(getCube(2,2), false);
 		}
 	}
