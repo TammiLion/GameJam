@@ -4,7 +4,7 @@
     <Files>
       <File FileName="Assets\Scripts\CubeScript.cs" Line="32" Column="2" />
       <File FileName="Assets\Scripts\PlayerBehaviour.cs" Line="89" Column="1" />
-      <File FileName="Assets\Scripts\TeamScript.cs" Line="73" Column="1" />
+      <File FileName="Assets\Scripts\TeamScript.cs" Line="196" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
