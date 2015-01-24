@@ -3,12 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerBehaviour : MonoBehaviour {
-	public Transform bulletPrefab;
-
-	private float bulletTimer2 = 0;
-	private float bulletTimer3 = 0;
-	private float bulletTimer4 = 0;
-
 	private List<Transform> cubes = new List<Transform>();
 	private List<int> cubeOrder = new List<int>();
 

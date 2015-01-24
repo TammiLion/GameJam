@@ -39,13 +39,18 @@ public class CubeBehaviour : MonoBehaviour {
 		Debug.Log("Bongiorno");
 	}
 
+	public void TakeDamage (string Element, string Weapon, float dmg) {
+		HP -= dmg * getElementWeakness(Element) / getWeaponResist(Weapon);
+		Debug.Log(HP);
+		if (HP <= 0) {
+			renderer.material.color = Color.black;
+		}
+	}
+
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.tag == "ProjectileTeam1") {
 			BulletBehaviour vs = col.gameObject.GetComponent<BulletBehaviour>();
-			HP -= vs.dmg * getElementWeakness(vs.Element) / getWeaponResist(vs.Weapon);
-		 	if (HP <= 0) {
-				renderer.material.color = Color.black;
-			}
+			TakeDamage(vs.Element, vs.Weapon, vs.dmg);
 			Destroy(col.gameObject);
 		}
 	}
