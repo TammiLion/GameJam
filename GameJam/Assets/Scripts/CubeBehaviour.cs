@@ -6,6 +6,8 @@ public class CubeBehaviour : MonoBehaviour {
 	public string Element;
 	public string Weapon = "Ranged";
 
+	public int pos;
+
 	public Transform bulletPrefab;
 
 	public float bulletTimer = 0;

@@ -12,10 +12,13 @@ public class MeleeBehaviour : CubeBehaviour {
 
 	public override void Attack() {
 		if (HP > 0 && bulletTimer >= 2){
-			Transform bullet = Instantiate(bulletPrefab, new Vector3(transform.position.x + 1f, transform.position.y, 0f), Quaternion.identity) as Transform;
-			BulletBehaviour bul = bullet.GetComponent<BulletBehaviour>();
-			bul.origin = transform;
-			bul.Element = Element;
+			RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 1f);
+	        if (hit.collider != null && hit.collider.gameObject.tag == "Team") {
+	            float distance = Mathf.Abs(hit.point.x - transform.position.x);
+	            Debug.Log(hit.collider.gameObject);
+	        }
+			//bul.origin = transform;
+			//bul.Element = Element;
 			bulletTimer = 0;
 		}
 	}

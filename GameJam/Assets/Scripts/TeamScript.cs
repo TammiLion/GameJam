@@ -4,7 +4,7 @@ using System.Collections;
 public class TeamScript : MonoBehaviour
 {
 	//Team
-	
+
 	//Controls first player
 	public string HORIZONTAL_1 = "Horizontal_P1";
 	public string JUMP_1 = "Jump_P1";
@@ -13,8 +13,8 @@ public class TeamScript : MonoBehaviour
 	public string SWAP_UP_1_1 = "Swap_up_1_P1";
 	public string SWAP_DOWN_1_1 = "Swap_down_1_P1";
 	public string SWAP_UP_2_1 = "Swap_up_2_P1";
-	public string SWAP_DOWN_2_1 = "Swap_down_2_P1"; 
-	
+	public string SWAP_DOWN_2_1 = "Swap_down_2_P1";
+
 	//Controls second player
 	public string HORIZONTAL_2 = "Horizontal_P2";
 	public string JUMP_2 = "Jump_P2";
@@ -24,10 +24,10 @@ public class TeamScript : MonoBehaviour
 	public string SWAP_DOWN_1_2 = "Swap_down_1_P2";
 	public string SWAP_UP_2_2 = "Swap_up_2_P2";
 	public string SWAP_DOWN_2_2 = "Swap_down_2_P2";
-	
+
 	private bool axis1InUse = false;
 	private bool axis2InUse = false;
-	
+
 	public float speed = 10;
 	public float gravity = 20;
 	public float jumpHeight = 15;
@@ -40,14 +40,14 @@ public class TeamScript : MonoBehaviour
 	private GameObject belowTopCube; //3
 	private GameObject swapThisCube;
 	Transform myTransform;
-	
+
 	// Use this for initialization
 	void Start ()
 	{
 		getAllCubes ();
 		myTransform = transform;
 	}
-	
+
 	void getAllCubes ()
 	{
 		bottomCube = (GameObject) GameObject.Find ("bottom");
@@ -55,16 +55,16 @@ public class TeamScript : MonoBehaviour
 		onBottomCube = (GameObject) GameObject.Find ("two");
 		belowTopCube = (GameObject) GameObject.Find ("three");
 	}
-	
+
 	// Update is called once per frame
-	
+
 	void Update ()
 	{
 		getSwapInputP1 ();
 		getSwapInputP2 ();
 		Move ();
 	}
-	
+
 	void getSwapInputP1() {
 		if (Input.GetButtonDown (SWAP_UP_1_1)) {
 			swapCube(getCube(1,1), true);
@@ -84,7 +84,7 @@ public class TeamScript : MonoBehaviour
 			swapCube(getCube(2,1), false);
 		}
 	}
-	
+
 	void getSwapInputP2() {
 		if (Input.GetButtonDown (SWAP_UP_1_2)) {
 			swapCube(getCube(1,2), true);
@@ -104,23 +104,26 @@ public class TeamScript : MonoBehaviour
 			swapCube(getCube(2,2), false);
 		}
 	}
-	
+
 	void swapCube(GameObject cube, bool up) {
 		if (up) {
 			if (cube == topCube) {
 				swapThisCube = null;
 				return;
 			} else if(cube == belowTopCube) {
+				Debug.Log("up: belowTopCube & topCube");
 				Swap(belowTopCube, topCube);
 				swapThisCube = belowTopCube;
 				belowTopCube = topCube;
 				topCube = swapThisCube;
 			} else if (cube == onBottomCube) {
+				Debug.Log("up: onBottomCube & belowTopCube");
 				Swap(onBottomCube, belowTopCube);
 				swapThisCube = onBottomCube;
 				onBottomCube = belowTopCube;
 				belowTopCube = swapThisCube;
 			} else if(cube == bottomCube) {
+				Debug.Log("up: bottomCube & onBottomCube");
 				Swap (bottomCube, onBottomCube);
 				swapThisCube = bottomCube;
 				bottomCube = onBottomCube;
@@ -131,16 +134,19 @@ public class TeamScript : MonoBehaviour
 				swapThisCube = null;
 				return;
 			} else if(cube == belowTopCube) {
+				Debug.Log("down: belowTopCube & onBottomCube");
 				Swap(belowTopCube, onBottomCube);
 				swapThisCube = onBottomCube;
 				onBottomCube = belowTopCube;
 				belowTopCube = swapThisCube;
 			} else if (cube == onBottomCube) {
+				Debug.Log("down: onBottomCube & bottomCube");
 				Swap(onBottomCube, bottomCube);
 				swapThisCube = bottomCube;
 				bottomCube = onBottomCube;
 				onBottomCube = swapThisCube;
 			} else if(cube == topCube) {
+				Debug.Log("down: topCube & belowTopCube");
 				Swap (topCube, belowTopCube);
 				swapThisCube = belowTopCube;
 				belowTopCube = topCube;
@@ -149,8 +155,8 @@ public class TeamScript : MonoBehaviour
 		}
 		swapThisCube = null;
 	}
-	
-	
+
+
 	public void Move ()
 	{
 		// get movement for X-axis
@@ -165,30 +171,34 @@ public class TeamScript : MonoBehaviour
 		rigidbody2D.velocity = movement * speed;
 		//rigidbody2D.AddForce (new Vector2(moveHorizontal * 0.5f, 0));
 	}
-	
+
 	public void Swap (GameObject one, GameObject two)
 	{
 		Vector3 temp = new Vector3 (one.transform.position.x, one.transform.position.y, one.transform.position.z);
 		one.transform.position = two.transform.position;
 		two.transform.position = temp;
 	}
-	
+
 	GameObject getCube (int id, int player)
 	{
 		CubeScript checkScript = bottomCube.GetComponent<CubeScript> ();
 		if (checkScript.player == player && checkScript.id == id) {
+			Debug.Log("return bottomCube");
 			return bottomCube;
 		}
 		checkScript = topCube.GetComponent<CubeScript> ();
 		if (checkScript.player == player && checkScript.id == id) {
+			Debug.Log("return topCube");
 			return topCube;
 		}
 		checkScript = onBottomCube.GetComponent<CubeScript> ();
 		if (checkScript.player == player && checkScript.id == id) {
+			Debug.Log("return onBottomCube");
 			return onBottomCube;
 		}
 		checkScript = belowTopCube.GetComponent<CubeScript> ();
 		if (checkScript.player == player && checkScript.id == id) {
+			Debug.Log("return belowTopCube");
 			return belowTopCube;
 		}
 		return null;
