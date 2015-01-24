@@ -3,22 +3,24 @@ using System.Collections;
 
 public class CubeScript : MonoBehaviour {
 
-	enum Type {
+	public enum Type {
 		melee,
 		ranged,
 		tank
 	}
 
-	enum Element {
+	public enum Element {
 		fire,
 		water,
 		earth,
 		electricity
 	}
 
-	int health;
-	Type type;
-	Element element;
+	public int health = 3;
+	public Type type;
+	public Element element;
+	public int player;
+	public int id;
 
 	// Use this for initialization
 	void Start() {
