@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\RangedBehaviour.cs" />
      <Compile Include="Assets\Scripts\TeamScript.cs" />
      <Compile Include="Assets\Scripts\hello.cs" />
+     <Compile Include="Assets\particleswaterfall.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
