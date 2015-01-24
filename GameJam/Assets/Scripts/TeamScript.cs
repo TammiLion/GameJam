@@ -116,5 +116,6 @@ public class TeamScript : MonoBehaviour
 				if (checkScript.player == player && checkScript.id == id) {
 						return belowTopCube;
 				}
+		return null;
 		}
 }
