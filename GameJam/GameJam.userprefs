@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TeamScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerBehaviour.cs">
     <Files>
-      <File FileName="Assets\Scripts\TeamScript.cs" Line="87" Column="4" />
-      <File FileName="Assets\Scripts\CubeScript.cs" Line="23" Column="16" />
+      <File FileName="Assets\Scripts\CubeScript.cs" Line="32" Column="2" />
+      <File FileName="Assets\Scripts\PlayerBehaviour.cs" Line="89" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
