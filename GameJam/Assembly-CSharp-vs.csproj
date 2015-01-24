@@ -49,8 +49,10 @@
      <Compile Include="Assets\Scripts\BulletBehaviour.cs" />
      <Compile Include="Assets\Scripts\CubeBehaviour.cs" />
      <Compile Include="Assets\Scripts\CubeScript.cs" />
+     <Compile Include="Assets\Scripts\MeleeBehaviour.cs" />
      <Compile Include="Assets\Scripts\PlayerBehaviour.cs" />
      <Compile Include="Assets\Scripts\RangedBehaviour.cs" />
+     <Compile Include="Assets\Scripts\TankBehaviour.cs" />
      <Compile Include="Assets\Scripts\TeamScript.cs" />
      <Compile Include="Assets\Scripts\hello.cs" />
   </ItemGroup>

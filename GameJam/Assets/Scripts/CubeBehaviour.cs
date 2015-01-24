@@ -12,8 +12,15 @@ public class CubeBehaviour : MonoBehaviour {
 
 	public float bulletTimer = 0;
 
+	public bool stunned = false;
+	private float stunTimer = 0f;
+
 	// Use this for initialization
 	public void Start () {
+		setColor();
+	}
+
+	void setColor () {
 		switch(Element) {
 			case "Fire":
 				renderer.material.color = Color.red;
@@ -31,31 +38,44 @@ public class CubeBehaviour : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+		if (stunTimer <= 0f) {
+			stunned = false;
+			setColor();
+		} else {
+			stunTimer -= Time.deltaTime;
+		}
+	}
 
+	public void GetStunned () {
+		renderer.material.color = Color.magenta;
+
+		stunned = true;
+		stunTimer = 3f;
 	}
 
 	public virtual void Attack() {
 		Debug.Log("Bongiorno");
 	}
 
-	public void TakeDamage (string Element, string Weapon, float dmg) {
-		HP -= dmg * getElementWeakness(Element) / getWeaponResist(Weapon);
-		Debug.Log(HP);
+	public virtual void TakeDamage (CubeBehaviour origin, float dmg) {
+		HP -= dmg * getElementWeakness(origin.Element) / getWeaponResist(origin.Weapon);
+		Debug.Log("Cube HP: " + HP);
 		if (HP <= 0) {
 			renderer.material.color = Color.black;
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D col) {
+	public virtual void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.tag == "ProjectileTeam1") {
 			BulletBehaviour vs = col.gameObject.GetComponent<BulletBehaviour>();
-			TakeDamage(vs.Element, vs.Weapon, vs.dmg);
+
+			TakeDamage(vs.origin.GetComponent<CubeBehaviour>(), vs.dmg);
 			Destroy(col.gameObject);
 		}
 	}
 
-	float getElementWeakness(string vsElement) {
+	public float getElementWeakness(string vsElement) {
 		if ((Element == "Fire" && vsElement == "Water") ||
 			(Element == "Earth" && vsElement == "Fire") ||
 			(Element == "Electro" && vsElement == "Earth") ||
@@ -66,7 +86,7 @@ public class CubeBehaviour : MonoBehaviour {
 		}
 	}
 
-	float getWeaponResist(string vsWeapon) {
+	public float getWeaponResist(string vsWeapon) {
 		if ((Weapon == "Melee" && vsWeapon == "Tank") ||
 			(Weapon == "Tank" && vsWeapon == "Ranged") ||
 			(Weapon == "Ranged" && vsWeapon == "Melee")) {
