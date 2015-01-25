@@ -6,6 +6,9 @@ public class PlayerBehaviour : MonoBehaviour {
 	private List<Transform> cubes = new List<Transform>();
 	private List<int> cubeOrder = new List<int>();
 
+	public float HP = 100f;
+	public Transform hpbar;
+
 	private bool axis1InUse = false;
 	private bool axis2InUse = false;
 
@@ -62,13 +65,13 @@ public class PlayerBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//move left and right
-		float xmove;
+		/*float xmove;
 		if (bottomCube.GetComponent<CubeScript> ().player == 1) {
 			xmove = Input.GetAxis (HORIZONTAL_1);
 		} else {
 			xmove = Input.GetAxis (HORIZONTAL_2);
-		}
-		rigidbody2D.AddForce(new Vector2(xmove * 10f, 0));
+		}*/
+		//rigidbody2D.AddForce(new Vector2(xmove * 10f, 0));
 
 		//fire1
 		if (Input.GetButton(FIRE1_P1)) {
@@ -92,42 +95,43 @@ public class PlayerBehaviour : MonoBehaviour {
 
 		getSwapInputP1();
 		getSwapInputP2();
+
+		hpbar.GetComponent<HPBehaviour> ().SetHP (HP);
+		if (HP <= 0) {
+			if (TEAM_TAG == "one") {
+				Debug.Log ("Winner Team TWO -->");
+			} else {
+				Debug.Log ("<-- Winner Team ONE");
+			}
+		}
 	}
 
 	void getSwapInputP1() {
 		if (Input.GetButtonDown (SWAP_UP_1_1)) {
-			Debug.Log(SWAP_UP_1_1);
 			swapCube(getCube(1,1), true);
 		}
 		if (Input.GetButtonDown (SWAP_DOWN_1_1)) {
-			Debug.Log(SWAP_DOWN_1_1);
 			swapCube(getCube(1,1), false);
 		}
 		if (Input.GetButtonDown(SWAP_UP_2_1)) {
-			Debug.Log(SWAP_UP_2_1);
 			swapCube(getCube(2,1), true);
 		}
 		if (Input.GetButtonDown(SWAP_DOWN_2_1)) {
-			Debug.Log(SWAP_DOWN_2_1);
 			swapCube(getCube(2,1), false);
 		}
 	}
 
 	void getSwapInputP2() {
 		if (Input.GetButtonDown (SWAP_UP_1_2)) {
-			Debug.Log(SWAP_UP_1_2);
 			swapCube(getCube(1,2), true);
 		}
 		if (Input.GetButtonDown (SWAP_DOWN_1_2)) {
-			Debug.Log(SWAP_DOWN_1_2);
 			swapCube(getCube(1,2), false);
 		}
 		if (Input.GetButtonDown(SWAP_UP_2_2)) {
-			Debug.Log(SWAP_UP_2_2);
 			swapCube(getCube(2,2), true);
 		}
 		if (Input.GetButtonDown(SWAP_DOWN_2_2)) {
-			Debug.Log(SWAP_DOWN_2_2);
 			swapCube(getCube(2,2), false);
 		}
 	}
@@ -138,19 +142,16 @@ public class PlayerBehaviour : MonoBehaviour {
 				swapThisCube = null;
 				return;
 			} else if(cube == belowTopCube) {
-				Debug.Log("up: belowTopCube & topCube");
 				Swap(belowTopCube, topCube);
 				swapThisCube = belowTopCube;
 				belowTopCube = topCube;
 				topCube = swapThisCube;
 			} else if (cube == onBottomCube) {
-				Debug.Log("up: onBottomCube & belowTopCube");
 				Swap(onBottomCube, belowTopCube);
 				swapThisCube = onBottomCube;
 				onBottomCube = belowTopCube;
 				belowTopCube = swapThisCube;
 			} else if(cube == bottomCube) {
-				Debug.Log("up: bottomCube & onBottomCube");
 				Swap (bottomCube, onBottomCube);
 				swapThisCube = bottomCube;
 				bottomCube = onBottomCube;
@@ -161,19 +162,16 @@ public class PlayerBehaviour : MonoBehaviour {
 				swapThisCube = null;
 				return;
 			} else if(cube == belowTopCube) {
-				Debug.Log("down: belowTopCube & onBottomCube");
 				Swap(belowTopCube, onBottomCube);
 				swapThisCube = onBottomCube;
 				onBottomCube = belowTopCube;
 				belowTopCube = swapThisCube;
 			} else if (cube == onBottomCube) {
-				Debug.Log("down: onBottomCube & bottomCube");
 				Swap(onBottomCube, bottomCube);
 				swapThisCube = bottomCube;
 				bottomCube = onBottomCube;
 				onBottomCube = swapThisCube;
 			} else if(cube == topCube) {
-				Debug.Log("down: topCube & belowTopCube");
 				Swap (topCube, belowTopCube);
 				swapThisCube = belowTopCube;
 				belowTopCube = topCube;
@@ -189,7 +187,6 @@ public class PlayerBehaviour : MonoBehaviour {
 		foreach (int i in cubeOrder) {
 			cubes+="," + i;
 		}
-		Debug.Log(cubes);
 	}
 
 	public void Swap (GameObject one, GameObject two)
@@ -204,28 +201,24 @@ public class PlayerBehaviour : MonoBehaviour {
 	{
 		CubeScript checkScript = bottomCube.GetComponent<CubeScript> ();
 		if (checkScript.player == player && checkScript.id == id) {
-			Debug.Log("return bottomCube");
 			return bottomCube;
 		}
 		checkScript = topCube.GetComponent<CubeScript> ();
 		if (checkScript.player == player && checkScript.id == id) {
-			Debug.Log("return topCube");
 			return topCube;
 		}
 		checkScript = onBottomCube.GetComponent<CubeScript> ();
 		if (checkScript.player == player && checkScript.id == id) {
-			Debug.Log("return onBottomCube");
 			return onBottomCube;
 		}
 		checkScript = belowTopCube.GetComponent<CubeScript> ();
 		if (checkScript.player == player && checkScript.id == id) {
-			Debug.Log("return belowTopCube");
 			return belowTopCube;
 		}
 		return null;
 	}
 
-	void OnCollisionStay2D(Collision2D col) {
+	/*void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.tag == "Ground"){
 			if (bottomCube.GetComponent<CubeScript> ().player == 1) {
 				if (Input.GetButton(JUMP_P1)) {
@@ -237,5 +230,5 @@ public class PlayerBehaviour : MonoBehaviour {
 				}
 			}
 		}
-	}
+	}*/
 }

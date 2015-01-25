@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: 8e76294ca2f98064994bbe6fa4d74d06
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - explosion: {fileID: 459478, guid: 235261b6743d1b641af9e460bedd877f, type: 2}
+  - bulletPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

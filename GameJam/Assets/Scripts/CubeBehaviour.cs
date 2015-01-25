@@ -5,6 +5,7 @@ public class CubeBehaviour : MonoBehaviour {
 	public float HP = 25f;
 	public string Element;
 	public string Weapon = "Ranged";
+	public Transform explosion;
 
 	public int pos;
 
@@ -14,6 +15,8 @@ public class CubeBehaviour : MonoBehaviour {
 
 	public bool stunned = false;
 	private float stunTimer = 0f;
+
+	protected bool dead = false;
 
 	// Use this for initialization
 	public void Start () {
@@ -39,11 +42,15 @@ public class CubeBehaviour : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (stunTimer <= 0f) {
-			stunned = false;
-			setColor();
+		if (!dead) {
+			if (stunTimer <= 0f) {
+				stunned = false;
+				setColor ();
+			} else {
+				stunTimer -= Time.deltaTime;
+			}
 		} else {
-			stunTimer -= Time.deltaTime;
+			renderer.material.color = Color.black;
 		}
 	}
 
@@ -55,15 +62,14 @@ public class CubeBehaviour : MonoBehaviour {
 	}
 
 	public virtual void Attack() {
-		Debug.Log("Bongiorno");
+		//Empty attack virtual
 	}
 
 	public virtual void TakeDamage (CubeBehaviour origin, float dmg) {
-		HP -= dmg * getElementWeakness(origin.Element) / getWeaponResist(origin.Weapon);
-		Debug.Log("Cube HP: " + HP);
-		if (HP <= 0) {
-			renderer.material.color = Color.black;
-		}
+		transform.parent.GetComponent<PlayerBehaviour>().HP -= dmg * getElementWeakness(origin.Element) / getWeaponResist(origin.Weapon);
+
+ 		Instantiate (explosion, transform.position, transform.rotation);
+
 	}
 
 	public virtual void OnTriggerEnter2D(Collider2D col) {

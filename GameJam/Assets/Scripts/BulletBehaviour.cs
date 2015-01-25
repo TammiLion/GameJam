@@ -2,12 +2,11 @@
 using System.Collections;
 
 public class BulletBehaviour : MonoBehaviour {
-	private int dir = 1;
 	public float dmg = 10f;
 	public Transform origin;
 	public string Weapon = "Ranged";
 	public string Element;
-
+	public int dir = 1;
 
 
 	// Use this for initialization

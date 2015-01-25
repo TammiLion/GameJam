@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class TankBehaviour : CubeBehaviour {
 	private float dmg = 1f;
+	public Transform defence;
 
 	// Update is called once per frame
 	void Update () {
@@ -11,13 +12,11 @@ public class TankBehaviour : CubeBehaviour {
 	}
 
 	public override void TakeDamage (CubeBehaviour origin, float dmg) {
-		HP -= dmg * getElementWeakness(origin.Element) / getWeaponResist(origin.Weapon);
+		transform.parent.GetComponent<PlayerBehaviour>().HP -= dmg * getElementWeakness(origin.Element) / getWeaponResist(origin.Weapon);
 
 		//get stunned
 		origin.GetStunned();
 
-		if (HP <= 0) {
-			renderer.material.color = Color.black;
-		}
+		//Instantiate (defence, transform.posotion, transform.rotation); //defense
 	}
 }
