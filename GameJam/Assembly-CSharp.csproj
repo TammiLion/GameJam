@@ -46,6 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ExplosionBehaviour.cs" />
+     <Compile Include="Assets\HPBehaviour.cs" />
      <Compile Include="Assets\Scripts\BulletBehaviour.cs" />
      <Compile Include="Assets\Scripts\CubeBehaviour.cs" />
      <Compile Include="Assets\Scripts\CubeScript.cs" />
