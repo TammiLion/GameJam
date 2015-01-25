@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ExplosionBehaviour.cs" />
+     <Compile Include="Assets\GroupAnimationScript.cs" />
      <Compile Include="Assets\HPBehaviour.cs" />
      <Compile Include="Assets\MainMenu.cs" />
      <Compile Include="Assets\Scripts\BulletBehaviour.cs" />
