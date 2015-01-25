@@ -46,9 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Credits.cs" />
      <Compile Include="Assets\ExplosionBehaviour.cs" />
      <Compile Include="Assets\GroupAnimationScript.cs" />
      <Compile Include="Assets\HPBehaviour.cs" />
+     <Compile Include="Assets\LoadCredits.cs" />
      <Compile Include="Assets\MainMenu.cs" />
      <Compile Include="Assets\Scripts\BulletBehaviour.cs" />
      <Compile Include="Assets\Scripts\CubeBehaviour.cs" />
@@ -60,6 +62,7 @@
      <Compile Include="Assets\Scripts\TeamScript.cs" />
      <Compile Include="Assets\Scripts\hello.cs" />
      <Compile Include="Assets\Scripts\particleswaterfall.cs" />
+     <Compile Include="Assets\splash.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

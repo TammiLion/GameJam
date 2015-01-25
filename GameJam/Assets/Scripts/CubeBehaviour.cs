@@ -6,6 +6,7 @@ public class CubeBehaviour : MonoBehaviour {
 	public string Element;
 	public string Weapon = "Ranged";
 	public Transform explosion;
+	public Transform stun;
 
 	public int pos;
 
@@ -55,7 +56,7 @@ public class CubeBehaviour : MonoBehaviour {
 	}
 
 	public void GetStunned () {
-		renderer.material.color = Color.magenta;
+		Instantiate (stun, transform.position, transform.rotation);
 
 		stunned = true;
 		stunTimer = 3f;
