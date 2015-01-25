@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour {
 	private List<Transform> cubes = new List<Transform>();
@@ -8,6 +9,9 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	public float HP = 100f;
 	public Transform hpbar;
+
+	public GameObject winText;
+	private float resetTimer = 0f;
 
 	private bool axis1InUse = false;
 	private bool axis2InUse = false;
@@ -52,6 +56,8 @@ public class PlayerBehaviour : MonoBehaviour {
 			i++;
 		}
 		printCubes();
+
+		winText.GetComponent<Text> ().enabled = false;
 	}
 
 	void getAllCubes ()
@@ -96,13 +102,20 @@ public class PlayerBehaviour : MonoBehaviour {
 		getSwapInputP1();
 		getSwapInputP2();
 
+		if (resetTimer >= 5f) {
+			Application.LoadLevel ("MainMenu");
+		}
+
 		hpbar.GetComponent<HPBehaviour> ().SetHP (HP);
 		if (HP <= 0) {
 			if (TEAM_TAG == "one") {
-				Debug.Log ("Winner Team TWO -->");
+				winText.GetComponent<Text> ().text = "Winner Team TWO -->";
 			} else {
-				Debug.Log ("<-- Winner Team ONE");
+				winText.GetComponent<Text> ().text = "<-- Winner Team ONE";
 			}
+			winText.GetComponent<Text> ().enabled = true;
+
+			resetTimer += Time.deltaTime;
 		}
 	}
 
@@ -111,13 +124,13 @@ public class PlayerBehaviour : MonoBehaviour {
 			swapCube(getCube(1,1), true);
 		}
 		if (Input.GetButtonDown (SWAP_DOWN_1_1)) {
-			swapCube(getCube(1,1), false);
+			//swapCube(getCube(1,1), false);
 		}
 		if (Input.GetButtonDown(SWAP_UP_2_1)) {
 			swapCube(getCube(2,1), true);
 		}
 		if (Input.GetButtonDown(SWAP_DOWN_2_1)) {
-			swapCube(getCube(2,1), false);
+			//swapCube(getCube(2,1), false);
 		}
 	}
 
@@ -126,13 +139,13 @@ public class PlayerBehaviour : MonoBehaviour {
 			swapCube(getCube(1,2), true);
 		}
 		if (Input.GetButtonDown (SWAP_DOWN_1_2)) {
-			swapCube(getCube(1,2), false);
+			//swapCube(getCube(1,2), false);
 		}
 		if (Input.GetButtonDown(SWAP_UP_2_2)) {
 			swapCube(getCube(2,2), true);
 		}
 		if (Input.GetButtonDown(SWAP_DOWN_2_2)) {
-			swapCube(getCube(2,2), false);
+			//swapCube(getCube(2,2), false);
 		}
 	}
 
