@@ -3,12 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerBehaviour : MonoBehaviour {
-	public Transform bulletPrefab;
-
-	private float bulletTimer2 = 0;
-	private float bulletTimer3 = 0;
-	private float bulletTimer4 = 0;
-
 	private List<Transform> cubes = new List<Transform>();
 	private List<int> cubeOrder = new List<int>();
 
@@ -21,6 +15,8 @@ public class PlayerBehaviour : MonoBehaviour {
 	private GameObject belowTopCube; //3
 	private GameObject swapThisCube;
 
+	public string TEAM_TAG = "";
+
 	public string HORIZONTAL_1 = "Horizontal_P1";
 	public string HORIZONTAL_2 = "Horizontal_P2";
 
@@ -32,6 +28,15 @@ public class PlayerBehaviour : MonoBehaviour {
 	public string SWAP_DOWN_1_2 = "Swap_down_1_P2";
 	public string SWAP_UP_2_2 = "Swap_up_2_P2";
 	public string SWAP_DOWN_2_2 = "Swap_down_2_P2";
+
+	public string JUMP_P1 = "Jump_P1";
+	public string JUMP_P2 = "Jump_P2";
+	public string FIRE1_P1 = "";
+	public string FIRE2_P1 = "";
+	public string FIRE1_P2 = "";
+	public string FIRE2_P2 = "";
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -48,10 +53,10 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	void getAllCubes ()
 	{
-		bottomCube = (GameObject) GameObject.Find ("bottom");
-		topCube = (GameObject) GameObject.Find ("top");
-		onBottomCube = (GameObject) GameObject.Find ("two");
-		belowTopCube = (GameObject) GameObject.Find ("three");
+		bottomCube = (GameObject) GameObject.Find ("bottom"+TEAM_TAG);
+		topCube = (GameObject) GameObject.Find ("top"+TEAM_TAG);
+		onBottomCube = (GameObject) GameObject.Find ("two"+TEAM_TAG);
+		belowTopCube = (GameObject) GameObject.Find ("three"+TEAM_TAG);
 	}
 
 	// Update is called once per frame
@@ -66,22 +71,22 @@ public class PlayerBehaviour : MonoBehaviour {
 		rigidbody2D.AddForce(new Vector2(xmove * 10f, 0));
 
 		//fire1
-		if (Input.GetButton("Fire1_P1")) {
+		if (Input.GetButton(FIRE1_P1)) {
 			cubes[0].GetComponent<CubeBehaviour>().Attack();
 		}
 
 		//fire2
-		if (Input.GetButton("Fire2_P1")) {
+		if (Input.GetButton(FIRE2_P1)) {
 			cubes[1].GetComponent<CubeBehaviour>().Attack();
 		}
 
 		//fire3
-		if (Input.GetButton("Fire1_P2")) {
+		if (Input.GetButton(FIRE1_P2)) {
 			cubes[2].GetComponent<CubeBehaviour>().Attack();
 		}
 
 		//fire4
-		if (Input.GetButton("Fire2_P2")) {
+		if (Input.GetButton(FIRE2_P2)) {
 			cubes[3].GetComponent<CubeBehaviour>().Attack();
 		}
 
@@ -98,16 +103,11 @@ public class PlayerBehaviour : MonoBehaviour {
 			Debug.Log(SWAP_DOWN_1_1);
 			swapCube(getCube(1,1), false);
 		}
-		/*if (Input.GetAxisRaw (SWAP_UP_2_1) == 0 && axis1InUse) {
-			axis1InUse = false;
-		}*/
-		if (Input.GetButtonDown (SWAP_UP_2_1) /*&! axis1InUse*/) {
-			//axis1InUse = true;
+		if (Input.GetButtonDown(SWAP_UP_2_1)) {
 			Debug.Log(SWAP_UP_2_1);
 			swapCube(getCube(2,1), true);
 		}
-		if (Input.GetButtonDown (SWAP_DOWN_2_1) /*&! axis1InUse*/) {
-			//axis1InUse = true;
+		if (Input.GetButtonDown(SWAP_DOWN_2_1)) {
 			Debug.Log(SWAP_DOWN_2_1);
 			swapCube(getCube(2,1), false);
 		}
@@ -122,17 +122,12 @@ public class PlayerBehaviour : MonoBehaviour {
 			Debug.Log(SWAP_DOWN_1_2);
 			swapCube(getCube(1,2), false);
 		}
-		/*if (Input.GetAxisRaw (SWAP_UP_2_2) == 0 && axis2InUse) {
-			axis2InUse = false;
-		}*/
-		if (Input.GetButtonDown (SWAP_UP_2_2)/*>0.0 &! axis2InUse*/) {
-			Debug.Log(SWAP_DOWN_2_2);
-			//axis2InUse = true;
+		if (Input.GetButtonDown(SWAP_UP_2_2)) {
+			Debug.Log(SWAP_UP_2_2);
 			swapCube(getCube(2,2), true);
 		}
-		if (Input.GetButtonDown(SWAP_DOWN_2_2)/*<-0.1 &! axis2InUse*/) {
+		if (Input.GetButtonDown(SWAP_DOWN_2_2)) {
 			Debug.Log(SWAP_DOWN_2_2);
-			//axis2InUse = true;
 			swapCube(getCube(2,2), false);
 		}
 	}
@@ -232,8 +227,14 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.tag == "Ground"){
-			if (Input.GetButton("Jump_P1")) {
-				rigidbody2D.AddForce(new Vector2(0, 100f));
+			if (bottomCube.GetComponent<CubeScript> ().player == 1) {
+				if (Input.GetButton(JUMP_P1)) {
+					rigidbody2D.AddForce(new Vector2(0, 100f));
+				}
+			} else {
+				if (Input.GetButton(JUMP_P2)) {
+					rigidbody2D.AddForce(new Vector2(0, 100f));
+				}
 			}
 		}
 	}

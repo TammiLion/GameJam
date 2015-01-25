@@ -46,14 +46,17 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\MainMenu.cs" />
      <Compile Include="Assets\Scripts\BulletBehaviour.cs" />
      <Compile Include="Assets\Scripts\CubeBehaviour.cs" />
      <Compile Include="Assets\Scripts\CubeScript.cs" />
+     <Compile Include="Assets\Scripts\MeleeBehaviour.cs" />
      <Compile Include="Assets\Scripts\PlayerBehaviour.cs" />
      <Compile Include="Assets\Scripts\RangedBehaviour.cs" />
+     <Compile Include="Assets\Scripts\TankBehaviour.cs" />
      <Compile Include="Assets\Scripts\TeamScript.cs" />
      <Compile Include="Assets\Scripts\hello.cs" />
-     <Compile Include="Assets\particleswaterfall.cs" />
+     <Compile Include="Assets\Scripts\particleswaterfall.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
